@@ -1,3 +1,4 @@
+const array = [] //tömb létrehozása
 /**
  * 
  * @param {string} className 
@@ -31,8 +32,6 @@ for(const cell of headcell){ //headcell tömb bejárása
 
 const tbody = document.createElement('tbody'); //tbody elem létrehozása és eltárolása egy változóba
 tableelement.appendChild(tbody); //tbody hozzáadása a tableelementhez
-
-containerDiv.appendChild(tableDiv); //tablediv hozzáadása a containerdivhez
 
 const formDiv = makeDiv("form"); //formdiv létrehozása, aminek a form lesz a classa
 const formSim = document.createElement('form'); //form létrehozása
@@ -87,4 +86,30 @@ const buttonFormSim = document.createElement('button'); //gomb létrehozása
 buttonFormSim.textContent = 'hozzáadás'; //gomb szövegének beállítása(hozzáadás)
 formSim.appendChild(buttonFormSim); //buttonFormSim hozzáadása a formSimhez
 
+formSim.addEventListener('submit', (e)=> { //form elküldésével fut le
+    e.preventDefault(); //az oldal újra frissülésének megakadályozása
+    const valueObject = {}; //üres objektum létrehozása, a mezők értékeinek az eltárolása
+    const inputFields = e.target.querySelectorAll('input, select'); //az összes input és select mezőt lekérése a formból
+    for(const inputField of inputFields){ //inputFields bejárása
+        valueObject[inputField.id] = inputField.value; //A mező idje lesz a kulcs az objektumban, az aktuális input mező értékének a hozzárendelése.
+    }
+    array.push(valueObject); //adatok hozzáadása a tömbhöz
+ 
+    const tableBodyRow  = document.createElement('tr'); //új sor létrehozása
+    tbody.appendChild(tableBodyRow ); //tableBodyRow hozzáadása a tbodyhoz
+ 
+    const forradalomCell = document.createElement('td'); //új cella létrehozása a forradalomnak
+    forradalomCell.textContent = valueObject.forradalom; //cella tartalma a forradalom értéke
+    tableBodyRow .appendChild(forradalomCell); //forradalomCell hozzáadása a tableBodyRowhoz
+
+    const evszamCell = document.createElement('td'); //új cella létrehozása az évszámnak
+    evszamCell.textContent = valueObject.evszam; //cella tartalma az évszám értéke
+    tableBodyRow .appendChild(evszamCell); //evszamCell hozzáadása a tableBodyRowhoz
+
+    const sikeresCell = document.createElement('td'); //új cella létrehozása a sikernek
+    sikeresCell.textContent = valueObject.sikeres; //cella tartalma a sikeres értéke
+    tableBodyRow .appendChild(sikeresCell); //sikeresCell hozzáadása a tableBodyRowhoz
+})
+
+containerDiv.appendChild(tableDiv); //tablediv hozzáadása a containerdivhez
 containerDiv.appendChild(formDiv); //formdiv hozzáadása a containerdivhez
