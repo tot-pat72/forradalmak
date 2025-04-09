@@ -12,15 +12,20 @@ class Area{ //Area osztály létrehozása
      * @param {string} className
      */
     constructor(className){ //constructor létrehozása aminek a className a bemeneti paramétere
+        const container = this.#getContainerDiv(); //#getContainerDiv meghívása és ennek eltárolása egy változóba
+        this.#div = document.createElement('div'); //új div elem létrehozása
+        this.#div.className = className; //className adása az új div elemnek
+        container.appendChild(this.#div); //új div elem hozzáadása a containerhez
+    }
+ 
+    #getContainerDiv(){
         let containerDiv = document.querySelector(".containeroop"); //containeroop classal rendelkező elemek eltárolása egy változóban
         if(!containerDiv){ //Ha nincs ilyen elem
             containerDiv = document.createElement("div"); //div elem létrehozása
             containerDiv.className = "containeroop"; //className adása a div elemnek
             document.body.appendChild(containerDiv); //containerdiv hozzáadása a bodyhoz
         }
-        this.#div = document.createElement("div"); //új privát div elem létrehozása 
-        this.#div.className = className; //className adása a div elemnek
-        containerDiv.appendChild(this.#div); //div elem hozzáadása a containerdivhez
+        return containerDiv; //Visszatérés a containerDivvel
     }
 }
 
@@ -31,7 +36,10 @@ class Table extends Area{ //Table osztály létrehozása, ami az Area leszármaz
      */
     constructor(cssClass){ //constructor létrehozása aminek egy bemeneti paramétere van
         super(cssClass); //Area osztály constructorának meghívása
+        const tbody = this.#createTable(); //createTable visszatérési értékének az eltárolása egy változóba
+    }
 
+    #createTable(){ //táblázat létrehozása
         const table = document.createElement('table'); //table elem létrehozása és eltárolása egy változóba
         this.div.appendChild(table); //table hozzáadás az Area által létre hozoztt divhez
         
@@ -50,6 +58,7 @@ class Table extends Area{ //Table osztály létrehozása, ami az Area leszármaz
         
         const tbody = document.createElement('tbody'); //tbody elem létrehozása és eltárolása egy változóba
         table.appendChild(tbody); //tbody hozzáadása a tableelementhez
+        return tbody; //Visszatérés a tbodyval
     }
 }
 
@@ -57,26 +66,13 @@ class Form extends Area{ //Form osztály létrehozása, ami az Area leszármazot
     /**
      * @param {string} cssClass
      */
-    constructor(cssClass){ //constructor létrehozása aminek egy bemeneti paramétere van
+    constructor(cssClass, fieldConfig){ //constructor létrehozása aminek két bemeneti paramétere van
         super(cssClass) //Area osztály constructorának meghívása
 
         const form = document.createElement('form'); //form létrehozása
         this.div.appendChild(form); //form hozzáadása az Area által létre hozoztt divhez
 
-        const fieldElementList = [{ //tömb létrehozása, benne 3 objektummal
-            fieldid: 'forradalom', //1. objektum idja
-            fieldLabel: 'forradalom' //1. objektum labelje
-        },
-        {
-            fieldid: 'evszam', //2. objektum idja
-            fieldLabel: 'evszám' //2. objektum labelje
-        },
-        {
-            fieldid: 'sikeres', //3. objektum idja
-            fieldLabel: 'sikeres' //3. objektum labelje
-        }];
-
-        for(const fieldElement of fieldElementList){ //fieldElementList tömb bejárása
+        for(const fieldElement of fieldConfig){ //fieldConfig tömb bejárása
             const field = makeDiv('field'); //field létrehozása
             form.appendChild(field); //field hozzáadása a formhoz
 
