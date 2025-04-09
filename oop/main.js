@@ -2,4 +2,4 @@ const separator = document.createElement('hr'); // hogy a html-en egyszeruen meg
 document.body.appendChild(separator); //separator hozzáadása a bodyhoz
 
 const table = new Table("table"); //Table osztály példányosítása, új objektum létrehozása a table classal
-const form = new Area("form"); //Area osztály példányosítása, új objektum létrehozása a form classal
+const form = new Form("form"); //Form osztály példányosítása, új objektum létrehozása a form classal
