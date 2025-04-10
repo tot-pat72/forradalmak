@@ -106,7 +106,7 @@ formSim.addEventListener('submit', (e)=> { //form elküldésével fut le
     evszamCell.textContent = valueObject.evszam; //cella tartalma az évszám értéke
     tableBodyRow .appendChild(evszamCell); //evszamCell hozzáadása a tableBodyRowhoz
 
-    const sikeresCell = document.createElement('td'); //új cella létrehozása a sikernek
+    const sikeresCell = document.createElement('td'); //új cella létrehozása a sikeresnek
     sikeresCell.textContent = valueObject.sikeres; //cella tartalma a sikeres értéke
     tableBodyRow .appendChild(sikeresCell); //sikeresCell hozzáadása a tableBodyRowhoz
 })
