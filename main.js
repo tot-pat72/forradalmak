@@ -72,8 +72,8 @@ for(const fieldElement of fieldElementList){ //fieldElementList tömb bejárása
         option_2.value = 'nem'; //option_2 értéke: nem
         option_2.innerText = 'nem'; //option_2 megjelenő szövege: nem
 
-        input.appendChild(option_1); //option_1(igen) hozzáadása
-        input.appendChild(option_2); //option_2(nem) hozzáadása
+        input.appendChild(option_1); //option_1(igen) hozzáadása az inputhoz
+        input.appendChild(option_2); //option_2(nem) hozzáadása az inputhoz
     }
     else{ //ha a mező sikertelen
         input = document.createElement('input'); //sima input mező létrehozása

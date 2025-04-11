@@ -98,47 +98,22 @@ class Table extends Area{ //Table osztály létrehozása, ami az Area leszármaz
 }
 
 class Form extends Area{ //Form osztály létrehozása, ami az Area leszármazottja
+    #formField //privát változó létrehozása
     /**
      * @param {string} cssClass
      */
     constructor(cssClass, fieldConfig, manager){ //constructor létrehozása aminek három bemeneti paramétere van
         super(cssClass, manager) //Area osztály constructorának meghívása
+        this.#formField = []; //üres tömb létrehozása
 
         const form = document.createElement('form'); //form létrehozása
         this.div.appendChild(form); //form hozzáadása az Area által létre hozoztt divhez
 
         for(const fieldElement of fieldConfig){ //fieldConfig tömb bejárása
-            const field = makeDiv('field'); //field létrehozása
-            form.appendChild(field); //field hozzáadása a formhoz
-
-            const label = document.createElement('label'); //label létrehozása
-            label.htmlFor = fieldElement.fieldid; //beállítja hogy melyik inputhoz tartozik
-            label.textContent = fieldElement.fieldLabel; //label szövegének beállítása
-            field.appendChild(label); //label hozzáadása a fieldhez
-            field.appendChild(document.createElement('br')); //sortörés, hogy az input új sorba legyen
-        
-            if (fieldElement.fieldid === 'sikeres') { //ha a mező sikeres
-                input = document.createElement('select'); //legördülő lista létrehozása
-                input.id = fieldElement.fieldid; //id beállítása
-
-                const option_1 = document.createElement('option'); //option_1 létrehozása
-                option_1.value = 'igen'; //option_1 értéke: igen
-                option_1.innerText = 'igen'; //option_1 megjelenő szövege: igen
-        
-                const option_2 = document.createElement('option'); //option_2 létrehozása
-                option_2.value = 'nem'; //option_2 értéke: nem
-                option_2.innerText = 'nem'; //option_2 megjelenő szövege: nem
-
-                input.appendChild(option_1); //option_1(igen) hozzáadása
-                input.appendChild(option_2); //option_2(nem) hozzáadása
-            }
-            else{ //ha a mező sikertelen
-                input = document.createElement('input'); //sima input mező létrehozása
-                input.id = fieldElement.fieldid; //id beállítása
-            }
-            field.appendChild(input); //input hozzáadása a fieldhez
+            const formField = new FormField(fieldElement.fieldid, fieldElement.fieldLabel); //új FormField objektum létrehozása
+            this.#formField.push(formField); //formfield eltárolása a tömbben
+            form.appendChild(formField.getDiv()); //formFieldhez tartozó elemek hozzáadása a formhoz
         }
-        
         const button = document.createElement('button'); //gomb létrehozása
         button.textContent = 'hozzáadás'; //gomb szövegének beállítása(hozzáadás)
         form.appendChild(button); //button hozzáadása a formhoz
@@ -155,4 +130,63 @@ class Form extends Area{ //Form osztály létrehozása, ami az Area leszármazot
         })
     }
 
+}
+
+class FormField { //FormField osztály létrehozása
+    #id; //privát változó létrehozása
+    #inputElement; //privát változó létrehozása
+    #labelElement; //privát változó létrehozása
+    #errorElement; //privát változó létrehozása
+
+    get id() { //get létrehozása, hogy el lehessen érni az idét
+        return this.#id; //Visszatérés az idvel
+    }
+ 
+    get value() { //get létrehozása, hogy el lehessen érni a valuet
+        return this.#inputElement.value; //Visszatérés a valueval
+    }
+ 
+    set error(value) { //set létrehozása, hogy be lehessen állítani a error valuet
+        this.#errorElement.textContent = value; //errorElement szövegének beállítása a kapott értékre
+    }
+
+    constructor(id, labelContent) { //constructor létrehozása aminek két bemeneti paramétere van
+        this.#id = id; //id értéke a bemeneti paraméter
+        this.#labelElement = document.createElement('label'); //label elem létrehozása
+        this.#labelElement.htmlFor = id; //label beállítása, hogy melyik inputhoz tartozik
+        this.#labelElement.textContent = labelContent; //label szövegének beállítása
+ 
+        if (id === 'sikeres') { //ha az id sikeres
+            this.#inputElement = document.createElement('select'); //legördülő lista létrehozása
+            this.#inputElement.id = id; //id beállítása
+ 
+            const option_igen = document.createElement('option'); //option_igen létrehozása
+            option_igen.value = 'igen'; //option_igen értéke: igen
+            option_igen.innerText = 'igen'; //option_igen megjelenő szövege: igen
+ 
+            const option_nem = document.createElement('option'); //option_nem létrehozása
+            option_nem.value = 'nem'; //option_nem értéke: nem
+            option_nem.innerText = 'nem'; //option_nem megjelenő szövege: nem
+ 
+            this.#inputElement.appendChild(option_igen); //option_igen(igen) hozzáadása az inputElementhez
+            this.#inputElement.appendChild(option_nem); //option_nem(igen) hozzáadása az inputElementhez
+        } 
+        else { //ha a mező sikertelen
+            this.#inputElement = document.createElement('input'); //input mező létrehozása
+            this.#inputElement.id = id; //id beállítása
+        }
+        this.#errorElement = document.createElement('span'); //span elem létrehozása
+        this.#errorElement.className = 'error'; //className adása, ami az error lesz
+    }
+
+    getDiv() { //metódus, ami visszaadja a teljes mezőt egy div-ben
+        const div = makeDiv('field'); //div elem létrehozása, amibe az elemek kerülnek
+        const br1 = document.createElement('br'); //első sortörés
+        const br2 = document.createElement('br'); //második sortörés
+        const elements = [this.#labelElement, br1, this.#inputElement, br2, this.#errorElement]; //tömbbe, az összes elem belerakása
+        for (const element of elements) { //elements tömb bejárása
+            div.appendChild(element); //element hozzáadása a divhez
+        }
+        return div; //Visszatérés a divvel
+    }
 }
