@@ -140,6 +140,31 @@ class Form extends Area{ //Form osztály létrehozása, ami az Area leszármazot
 
 }
 
+class Upload extends Area { //Upload osztály létrehozása, ami az Area leszármazottja
+    constructor(cssClass, manager) { //constructor létrehozása aminek két bemeneti paramétere van
+        super(cssClass, manager); //Area osztály constructorának meghívása
+        const fileInput = document.createElement('input'); //input létrehozása
+        fileInput.id = 'fileinput'; //fileInput idje fileinput lesz
+        fileInput.type = 'file'; //fileInput típusa file lesz
+        this.div.appendChild(fileInput); //fileInput hozzáadása az Area által létre hozoztt divhez
+        fileInput.addEventListener('change', (e) => { //eseménykezelő létrehozása a fileInput elemhez
+            const file = e.target.files[0]; //első fájl kiválasztása
+            const fileReader = new FileReader(); //FileReader osztály létrehozása
+            fileReader.onload = () => { //fájl betöltődése
+                const fileLines = fileReader.result.split('\n'); //tömb tartalmának a sorokra bontása
+                const removedLines  = fileLines.slice(1); //fejléc eltávolítása a tömbből
+                for(const line of removedLines) { //removedLines bejárása
+                    const trimmedLine = line.trim(); //felesleges szóközöket kiszedése
+                    const fields = trimmedLine.split(';'); //sorok szétszedése a pontosvesszők mentén
+                    const adat = new Data(fields[0], Number(fields[1]), fields[2]); //objektum létrehozása, a fájl elemeivel
+                    this.manager.addData(adat); //új objektum hozzáadása a managerhez
+                }
+            };
+            fileReader.readAsText(file); //fájl beolvasása szövegként
+        });
+    }
+}
+
 class FormField { //FormField osztály létrehozása
     /**
      * @param {string} id
