@@ -80,6 +80,11 @@ for(const fieldElement of fieldElementList){ //fieldElementList tömb bejárása
         input.id = fieldElement.fieldid; //id beállítása
     }
     field.appendChild(input); //input hozzáadása a fieldhez
+
+    field.appendChild(document.createElement('br')); //sortörés hozzáadása a fieldhez
+    const error = document.createElement('span'); //span létrehozása a hiba üzenetnek
+    error.className = 'error'; //className adása az error elemnek, ami az error lesz
+    field.appendChild(error); //error hozzáadása a fieldhez
 }
  
 const buttonFormSim = document.createElement('button'); //gomb létrehozása
@@ -90,9 +95,21 @@ formSim.addEventListener('submit', (e)=> { //form elküldésével fut le
     e.preventDefault(); //az oldal újra frissülésének megakadályozása
     const valueObject = {}; //üres objektum létrehozása, a mezők értékeinek az eltárolása
     const inputFields = e.target.querySelectorAll('input, select'); //az összes input és select mezőt lekérése a formból
+    let valid = true; //valid változó létrehozása, aminek az kezdő értéke igaz
     for(const inputField of inputFields){ //inputFields bejárása
+        const error = inputField.parentElement.querySelector('.error'); //error classal rendelkező elem eltárolása egy változóban
+        if(!error){ //ha nem létezik ilyen mező
+            console.error('nincs errorfield'); //nincs errorfield hibaüzenet kiírása a konzolra
+            return; //visszatérés
+        }
+        error.textContent = ''; //hibaüzenet mező kiürítése
+        if(inputField.value === ''){ //ha az inputField üres
+            error.textContent = 'Kötelező megadni!'; //hibaüzenetet kiírása
+            valid = false; //valid értéke false lesz
+        }
         valueObject[inputField.id] = inputField.value; //A mező idje lesz a kulcs az objektumban, az aktuális input mező értékének a hozzárendelése.
     }
+    if(valid){ //ha a valid értéke true
     array.push(valueObject); //adatok hozzáadása a tömbhöz
  
     const tableBodyRow  = document.createElement('tr'); //új sor létrehozása
@@ -109,6 +126,7 @@ formSim.addEventListener('submit', (e)=> { //form elküldésével fut le
     const sikeresCell = document.createElement('td'); //új cella létrehozása a sikeresnek
     sikeresCell.textContent = valueObject.sikeres; //cella tartalma a sikeres értéke
     tableBodyRow .appendChild(sikeresCell); //sikeresCell hozzáadása a tableBodyRowhoz
+    }
 })
 
 containerDiv.appendChild(tableDiv); //tablediv hozzáadása a containerdivhez
