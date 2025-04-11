@@ -87,6 +87,9 @@ for(const fieldElement of fieldElementList){ //fieldElementList tömb bejárása
     field.appendChild(error); //error hozzáadása a fieldhez
 }
  
+/**
+ * @param {HTMLFormElement}
+ */
 const buttonFormSim = document.createElement('button'); //gomb létrehozása
 buttonFormSim.textContent = 'hozzáadás'; //gomb szövegének beállítása(hozzáadás)
 formSim.appendChild(buttonFormSim); //buttonFormSim hozzáadása a formSimhez
