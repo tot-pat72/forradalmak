@@ -115,7 +115,7 @@ formSim.addEventListener('submit', (e)=> { //form elküldésével fut le
     if(valid){ //ha a valid értéke true
     array.push(valueObject); //adatok hozzáadása a tömbhöz
  
-    const tableBodyRow  = document.createElement('tr'); //új sor létrehozása
+    const tableBodyRow = document.createElement('tr'); //új sor létrehozása
     tbody.appendChild(tableBodyRow ); //tableBodyRow hozzáadása a tbodyhoz
  
     const forradalomCell = document.createElement('td'); //új cella létrehozása a forradalomnak
@@ -134,3 +134,41 @@ formSim.addEventListener('submit', (e)=> { //form elküldésével fut le
 
 containerDiv.appendChild(tableDiv); //tablediv hozzáadása a containerdivhez
 containerDiv.appendChild(formDiv); //formdiv hozzáadása a containerdivhez
+
+const fileInput = document.createElement('input'); //input létrehozása
+containerDiv.appendChild(fileInput); //fileInput hozzáadása a containerDivhez
+fileInput.id = 'fileinput'; //fileInput idje fileinput lesz
+fileInput.type = 'file'; //fileInput típusa file lesz
+fileInput.addEventListener('change', (e) => { //eseménykezelő létrehozása a fileInput elemhez
+    const file = e.target.files[0]; //első fájl kiválasztása
+    const fileReader = new FileReader(); //FileReader osztály létrehozása
+    fileReader.onload = () => { //fájl betöltődése
+        const fileLines = fileReader.result.split('\n'); //tömb tartalmának a sorokra bontása
+        const removedLines = fileLines.slice(1); //fejléc eltávolítása a tömbből
+        for (const line of removedLines) { //removedLines bejárása
+            const trimmedLine  = line.trim(); //felesleges szóközöket kiszedése
+            const fields = trimmedLine .split(';'); //sorok szétszedése a pontosvesszők mentén
+            const adat = { //objektum létrehozása
+                forradalom: fields[0], //objektum 1.eleme
+                evszam: fields[1], //objektum 2.eleme
+                sikeres: fields[2] //objektum 3.eleme
+            };
+            array.push(adat); //adatok hozzáadása a tömbhöz
+            const tableBodyRow = document.createElement('tr'); //új sor létrehozása
+            tbody.appendChild(tableBodyRow); //tableBodyRow hozzáadása a tbodyhoz
+ 
+            const forradalomCell = document.createElement('td'); //új cella létrehozása a forradalomnak
+            forradalomCell.textContent = adat.forradalom; //cella tartalma a forradalom értéke
+            tableBodyRow.appendChild(forradalomCell); //forradalomCell hozzáadása a tableBodyRowhoz
+ 
+            const evszamCell = document.createElement('td'); //új cella létrehozása az évszámnak
+            evszamCell.textContent = adat.evszam; //cella tartalma az évszám értéke
+            tableBodyRow.appendChild(evszamCell); //evszamCell hozzáadása a tableBodyRowhoz
+
+            const sikeresCell = document.createElement('td'); //új cella létrehozása a sikeresnek
+            sikeresCell.textContent = adat.sikeres; //cella tartalma a sikeres értéke
+            tableBodyRow.appendChild(sikeresCell); //sikeresCell hozzáadása a tableBodyRowhoz
+        }
+    };
+    fileReader.readAsText(file); //fájl beolvasása szövegként
+});
