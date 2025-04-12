@@ -17,4 +17,4 @@ const fieldConfig = [{ //tömb létrehozása, benne 3 objektummal
     fieldLabel: 'sikeres' //3. objektum labelje
 }];
 const form = new Form("form", fieldConfig, manager); //Form osztály példányosítása, új objektum létrehozása a form classal
-const fileUpload = new Upload('upload', manager); //Upload példányosítása
+const fileUpload = new UploadDownload('upload', manager); //UploadDownload példányosítása

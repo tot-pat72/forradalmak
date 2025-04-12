@@ -140,7 +140,7 @@ class Form extends Area{ //Form osztály létrehozása, ami az Area leszármazot
 
 }
 
-class Upload extends Area { //Upload osztály létrehozása, ami az Area leszármazottja
+class UploadDownload extends Area { //UploadDownload osztály létrehozása, ami az Area leszármazottja
     constructor(cssClass, manager) { //constructor létrehozása aminek két bemeneti paramétere van
         super(cssClass, manager); //Area osztály constructorának meghívása
         const fileInput = document.createElement('input'); //input létrehozása
@@ -161,6 +161,18 @@ class Upload extends Area { //Upload osztály létrehozása, ami az Area leszár
                 }
             };
             fileReader.readAsText(file); //fájl beolvasása szövegként
+        });
+        const exportButton = document.createElement('button'); //új gomb létrehozása
+        exportButton.textContent = 'Letöltés'; //gomb szövege a Letöltés lesz
+        this.div.appendChild(exportButton); //exportButton hozzáadása az Area által létre hozoztt divhez
+        exportButton.addEventListener('click', () => { //eseménykezelő létrehozása az exportButton elemhez
+        const link = document.createElement('a'); //link elem létrehozása
+        const content = this.manager.generateExportString(); //manager objektum generateExportString() metódusának meghívása
+        const file = new Blob([content]) //Blob létrehozása
+        link.href = URL.createObjectURL(file);// A fájlhoz tartozó ideiglenes URL létrehozása, hogy letölthető legyen a fájl
+        link.download = 'newdata.csv' //letöltött fájl nevének megadása
+        link.click(); //linkre kattintásnál elindul a letöltés
+        URL.revokeObjectURL(link.href); //ideiglenes URL visszavonása
         });
     }
 }
