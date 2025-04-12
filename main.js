@@ -172,3 +172,20 @@ fileInput.addEventListener('change', (e) => { //eseménykezelő létrehozása a 
     };
     fileReader.readAsText(file); //fájl beolvasása szövegként
 });
+
+const exportButton = document.createElement('button'); //új gomb létrehozása
+exportButton.textContent = 'Letöltés'; //gomb szövege a Letöltés lesz
+containerDiv.appendChild(exportButton); //exportButton hozzáadása a containerDivhez
+exportButton.addEventListener('click', () => { //eseménykezelő létrehozása az exportButton elemhez
+    const link = document.createElement('a'); //link elem létrehozása
+    const contentArray = ['forradalom;evszam;sikeres'] //contentArray tömb létrehozása, aminek első sora a fejléc
+    for(const data of array){ //array bejárása
+        contentArray.push(`${data.forradalom};${data.evszam};${data.sikeres}`); //sorok hozzáadása a tömbhöz
+    }
+    const content = contentArray.join('\n'); //tömb átalakítása szöveggé(string), elválasztás soronként
+    const file = new Blob([content]) //Blob létrehozása
+    link.href = URL.createObjectURL(file);// A fájlhoz tartozó ideiglenes URL létrehozása, hogy letölthető legyen a fájl
+    link.download = 'newdata.csv' //letöltött fájl nevének megadása
+    link.click(); //linkre kattintásnál elindul a letöltés
+    URL.revokeObjectURL(link.href); //ideiglenes URL visszavonása
+})
