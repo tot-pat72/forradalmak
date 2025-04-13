@@ -299,7 +299,7 @@ const createFilterForm = (containerDiv, tbody, array) => { //Arrow function lét
         })
         tbody.innerHTML = ''; //táblázat kiürítése
         for(const filteredElement of filteredArray){ //filteredArray bejárása
-            addRow(filteredElement, tbody) //addRow függvény egy új sort ad a táblázathozs
+            addRow(filteredElement, tbody) //addRow függvény egy új sort ad a táblázathoz
                 
         }
     })

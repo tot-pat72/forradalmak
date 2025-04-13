@@ -18,3 +18,4 @@ const fieldConfig = [{ //tömb létrehozása, benne 3 objektummal
 }];
 const form = new Form("form", fieldConfig, manager); //Form osztály példányosítása, új objektum létrehozása a form classal
 const fileUpload = new UploadDownload('upload', manager); //UploadDownload példányosítása
+const filterOop = new Filter('filter', manager); //Filter példányosítása

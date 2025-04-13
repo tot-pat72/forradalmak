@@ -58,24 +58,32 @@ class Table extends Area{ //Table osztály létrehozása, ami az Area leszármaz
     constructor(cssClass, manager){ //constructor létrehozása aminek két bemeneti paramétere van
         super(cssClass, manager); //Area osztály constructorának meghívása
         const tbody = this.#createTable(); //createTable visszatérési értékének az eltárolása egy változóba
-        this.manager.setAddDataCallback((datas) => { //arrow function létrehozása 
+        this.manager.setAddDataCallback((datas) => { //eseményhez tartozó callback függvény beállítása
+            this.#createDataRow(datas, tbody); //createDataRow függvény egy új sort ad a táblázathoz
+        })
+        this.manager.setRenderTableCallback((dataArray) => { //eseményhez tartozó callback függvény beállítása
+            tbody.innerHTML = ''; //táblázat kiürítése
+            for(const data of dataArray){ //dataArray bejárása
+                this.#createDataRow(data, tbody); //createDataRow függvény egy új sort ad a táblázathoz
+            }
+        })
+    }
+    #createDataRow(data, tbody){ //createDataRow függvény egy új sort ad a táblázathoz
         const tableBodyRow = document.createElement('tr'); //új sor létrehozása
         tbody.appendChild(tableBodyRow); //tableBodyRow hozzáadása a tbodyhoz
 
         const forradalomCell = document.createElement('td'); //új cella létrehozása a forradalomnak
-        forradalomCell.textContent = datas.forradalom; //cella tartalma a forradalom értéke
+        forradalomCell.textContent = data.forradalom; //cella tartalma a forradalom értéke
         tableBodyRow.appendChild(forradalomCell); //forradalomCell hozzáadása a tableBodyRowhoz
  
         const evszamCell = document.createElement('td'); //új cella létrehozása az évszámnak
-        evszamCell.textContent = datas.evszam; //cella tartalma az évszám értéke
+        evszamCell.textContent = data.evszam; //cella tartalma az évszám értéke
         tableBodyRow.appendChild(evszamCell); //evszamCell hozzáadása a tableBodyRowhoz
 
         const sikeresCell = document.createElement('td'); //új cella létrehozása a sikeresnek
-        sikeresCell.textContent = datas.sikeres; //cella tartalma a sikeres értéke
+        sikeresCell.textContent = data.sikeres; //cella tartalma a sikeres értéke
         tableBodyRow.appendChild(sikeresCell); //sikeresCell hozzáadása a tableBodyRowhoz
-        })
     }
-
     /**
      * 
      * @returns {HTMLTableSectionElement}
