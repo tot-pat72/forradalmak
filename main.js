@@ -9,6 +9,21 @@ const makeDiv = (className) => { //Arrow function létrehozása aminek a classNa
     div.className = className; //className adása a div elemnek
     return div; //Visszatérés a divvel
 }
+/**
+ * 
+ * @param {Array} dataArray
+ * @param {boolean} callback
+ * @returns {Array}
+ */
+const filter = (dataArray, callback) => { //Arrow function létrehozása aminek a dataArray és a callback a bemeneti paramétere
+    const result = []; //üres tömb létrehozása, a szürt elemeknek
+    for(const element of dataArray){ //dataArray bejárása
+        if(callback(element)){ //ha a callback függvény truet ad vissza
+            result.push(element); //result hozzáadása a tömbhöz
+        }
+    }
+    return result; //visszatérés resulttal
+}
 const containerDiv = makeDiv("container"); //containerdiv létrehozása, aminek a container lesz a classa
 document.body.appendChild(containerDiv); //containerdiv hozzáadása a bodyhoz
 
@@ -188,4 +203,87 @@ exportButton.addEventListener('click', () => { //eseménykezelő létrehozása a
     link.download = 'newdata.csv' //letöltött fájl nevének megadása
     link.click(); //linkre kattintásnál elindul a letöltés
     URL.revokeObjectURL(link.href); //ideiglenes URL visszavonása
+});
+
+const filterFormDiv = makeDiv('filterForm') //filterFormDiv létrehozása, aminek a filterForm lesz a classa
+containerDiv.appendChild(filterFormDiv); //filterFormDiv hozzáadása a containerDivhez
+
+const formForFilter = document.createElement('form'); //form létrehozása
+filterFormDiv.appendChild(formForFilter); //formForFilter hozzáadása a filterFormDivhez
+
+const select = document.createElement('select'); //legördülő lista létrehozása
+formForFilter.appendChild(select); //select hozzáadása a formForFilterhez
+
+const options = [{ //tömb létrehozása, benne objektummal
+    value: '', //lista 1.értéke
+    innerText: '' //üres szöveg
+},
+{
+    value: 'forradalom', //lista 2.értéke
+    innerText: 'forradalom' //szövege: forradalom
+},
+{
+    value: 'evszam', //lista 3.értéke
+    innerText: 'évszám' //szövege: évszám
+},
+{
+    value: 'sikeres', //lista 4.értéke
+    innerText: 'sikeres' //szövege: sikeress
+}]
+for(const option of options){ //options tömb bejárása
+    const optionElement = document.createElement('option'); //optionElement létrehozása
+    optionElement.value = option.value; //érték beállítása
+    optionElement.innerText = option.innerText //megjelenő szöveg beállítása
+    select.appendChild(optionElement); //optionElement hozzáadása a selecthez
+}
+ 
+const filterInputField = document.createElement('input'); //input létrehozása
+filterInputField.id = 'filterInput'; //filterInputField idje filterInput lesz
+formForFilter.appendChild(filterInputField); //filterInputField hozzáadása a formForFilterhez
+ 
+const button = document.createElement('button'); //új gomb létrehozása
+button.innerText = 'Szűrés'; //gomb szövege a Szűrés lesz
+formForFilter.appendChild(button); //button hozzáadása a formForFilterhez
+
+formForFilter.addEventListener('submit', (e) => { //eseménykezelő létrehozása a formForFilter submit eseményére
+    e.preventDefault(); //az oldal újra frissülésének megakadályozása
+    const filterInput = e.target.querySelector('#filterInput'); //filterinput classal rendelkezö elem kiválasztása
+    const select = e.target.querySelector('select'); //select classal rendelkezö elem kiválasztása
+    const filteredArray = filter(array, (element) => { //filteredArray létrehozása a megadott mező és érték alapján
+        if(select.value == 'forradalom'){ //ha a kiválasztott mező a forradalom
+            if(filterInput.value === element.forradalom){ //ha a filterInput értéke egyenlő a forradalom értékével
+                return true; //visszatérés igazzal
+            }
+        }
+        else if(select.value == 'evszam'){ //ha a kiválasztott mező az evszam
+            if(filterInput.value === element.evszam){ //ha a filterInput értéke egyenlő az evszam értékével
+                return true; //visszatérés igazzal
+            }
+        }
+        else if(select.value == 'sikeres'){ //ha a kiválasztott mező a sikeres
+            if(filterInput.value === element.sikeres){ //ha a filterInput értéke egyenlő a sikeres értékével
+                return true; //visszatérés igazzal
+            }
+        }
+        else{
+            return true; //visszatérés igazzal
+        }
+    })
+    tbody.innerHTML = ''; //táblázat kiürítése
+    for(const filteredElement of filteredArray){ //filteredArray bejárása
+        const tableBodyRow = document.createElement('tr'); //új sor létrehozása
+            tbody.appendChild(tableBodyRow); //tableBodyRow hozzáadása a tbodyhoz
+
+            const forradalomCell = document.createElement('td'); //új cella létrehozása a forradalomnak
+            forradalomCell.textContent = filteredElement.forradalom; //cella tartalma a forradalom értéke
+            tableBodyRow.appendChild(forradalomCell); //forradalomCell hozzáadása a tableBodyRowhoz
+ 
+            const evszamCell = document.createElement('td'); //új cella létrehozása az évszámnak
+            evszamCell.textContent = filteredElement.evszam; //cella tartalma az évszám értéke
+            tableBodyRow.appendChild(evszamCell); //evszamCell hozzáadása a tableBodyRowhoz
+
+            const sikeresCell = document.createElement('td'); //új cella létrehozása a sikeresnek
+            sikeresCell.textContent = filteredElement.sikeres; //cella tartalma a sikeres értéke
+            tableBodyRow.appendChild(sikeresCell); //sikeresCell hozzáadása a tableBodyRowhoz
+    }
 })
