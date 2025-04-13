@@ -1,5 +1,11 @@
 class Area{ //Area osztály létrehozása
+    /**
+     * @type {HTMLElement}
+     */
     #div //privát változó létrehozása
+    /**
+     * @type {Manager}
+     */
     #manager //privát változó létrehozása
 
     /**
