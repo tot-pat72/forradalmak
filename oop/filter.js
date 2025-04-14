@@ -1,4 +1,9 @@
 class Filter extends Area{ //Filter osztály létrehozása, ami az Area leszármazottja
+    /**
+     * 
+     * @param {string} cssclass 
+     * @param {Manager} manager 
+     */
     constructor(cssclass, manager){ //constructor létrehozása aminek a cssClass és a manager a bemeneti paramétere
         super(cssclass, manager); //Area osztály constructorának meghívása
 
@@ -35,8 +40,7 @@ class Filter extends Area{ //Filter osztály létrehozása, ami az Area leszárm
         filterInputField.id = 'filterInput'; //filterInputField idje filterInput lesz
         formForFilter.appendChild(filterInputField); //filterInputField hozzáadása a formForFilterhez
 
-        const button = document.createElement('button'); //új gomb létrehozása
-        button.innerText = 'Szűrés'; //gomb szövege a Szűrés lesz
+        const button = this.createButton('Szűrés') //gomb létrehozása a createButton segítségével
         formForFilter.appendChild(button); //button hozzáadása a formForFilterhez
 
         formForFilter.addEventListener('submit', (e) => { //eseménykezelő létrehozása a formForFilter submit eseményére
