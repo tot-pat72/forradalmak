@@ -2,11 +2,7 @@ const array = [] //tömb létrehozása
 
 const containerDiv = makeDiv("container"); //containerdiv létrehozása, aminek a container lesz a classa
 document.body.appendChild(containerDiv); //containerdiv hozzáadása a bodyhoz
-/**
- * 
- * @param {HTMLElement} containerDiv
- * @param {Function} bodyOfTable
- */
+
 createTable(containerDiv, (bodyOfTable) => { //createTable függvény létrehozása, amely létrehozza a táblázatot
     createForm(bodyOfTable, containerDiv, array); //createForm létrehozása, amivel új adatokat lehet beküldeni a táblázathoz
     createFileUpload(bodyOfTable, containerDiv, array); //createFileUpload létrehozása, hogy a felhasználó feltölthessen adatokat egy fájlból

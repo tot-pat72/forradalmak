@@ -98,7 +98,7 @@ class Table extends Area{ //Table osztály létrehozása, ami az Area leszármaz
     /**
      * 
      * @param {Data} data 
-     * @param {string} tbody 
+     * @param {HTMLTableSectionElement} tbody 
      */
     #createDataRow(data, tbody){ //createDataRow függvény egy új sort ad a táblázathoz
         const tableBodyRow = document.createElement('tr'); //új sor létrehozása
@@ -109,7 +109,7 @@ class Table extends Area{ //Table osztály létrehozása, ami az Area leszármaz
     }
     /**
      * 
-     * @param {string} row 
+     * @param {stHTMLTableRowElementring} row 
      * @param {string} textContent 
      * @param {string} type 
      */
@@ -151,7 +151,7 @@ class Form extends Area{ //Form osztály létrehozása, ami az Area leszármazot
     /**
      * 
      * @param {string} cssClass 
-     * @param {string} fieldConfig 
+     * @param {{fieldid: string, fieldLabel: string}[]} fieldConfig 
      * @param {Manager} manager 
      */
     constructor(cssClass, fieldConfig, manager){ //constructor létrehozása aminek három bemeneti paramétere van
@@ -209,7 +209,7 @@ class Form extends Area{ //Form osztály létrehozása, ami az Area leszármazot
     }
     /**
      * 
-     * @returns {string}
+     * @returns {{forradalom: string, evszam: string, sikeres: string}}
      */
     #getValueObject(){ //mezők értékeinek összegyűjtése és visszaadása egy objektumban
         const valueObject = {}; //üres objektum létrehozása, a mezők értékeinek az eltárolása
@@ -310,7 +310,10 @@ class FormField { //FormField osztály létrehozása
         return this.#inputElement.value; //Visszatérés a valueval
     }
  
-    set error(value) { //set létrehozása, hogy be lehessen állítani a error valuet
+    /**
+     * @param {string}
+     */
+    set error(value) { //setter létrehozása az 'error' értékének beállításához
         this.#errorElement.textContent = value; //errorElement szövegének beállítása a kapott értékre
     }
 

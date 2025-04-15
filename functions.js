@@ -10,9 +10,9 @@ const makeDiv = (className) => { //Arrow function létrehozása aminek a classNa
 }
 /**
  * 
- * @param {Array} dataArray
- * @param {boolean} callback
- * @returns {Array}
+ * @param {Array<{forradalom: string, evszam: string, sikeres: string}>} dataArray
+ * @param {{forradalom: string, evszam: string, sikeres: string}: boolean} callback
+ * @returns {Array<{forradalom: string, evszam: string, sikeres: string}>}
  */
 const filter = (dataArray, callback) => { //Arrow function létrehozása aminek a dataArray és a callback a bemeneti paramétere
     const result = []; //üres tömb létrehozása, a szürt elemeknek
@@ -25,7 +25,7 @@ const filter = (dataArray, callback) => { //Arrow function létrehozása aminek 
 }
 /**
  * @param {HTMLElement} containerDiv
- * @param {Function} callback
+ * @param {function(HTMLElement): void} callback
  */
 const createTable = (containerDiv, callback) => { //Arrow function létrehozása aminek a containerDiv és a callback a bemeneti paramétere
     const tableDiv = makeDiv("table"); //tablediv létrehozása, aminek a table lesz a classa
@@ -53,7 +53,7 @@ const createTable = (containerDiv, callback) => { //Arrow function létrehozása
 /**
  * @param {HTMLElement} tbody
  * @param {HTMLElement} containerDiv
- * @param {Array} array
+ * @param {Array[]} array
  */
 const createFileUpload = (tbody, containerDiv, array) => { //Arrow function létrehozása aminek a tbody, containerDiv és az array a bemeneti paramétere
     const fileInput = document.createElement('input'); //input létrehozása
@@ -97,7 +97,7 @@ const createFileUpload = (tbody, containerDiv, array) => { //Arrow function lét
 /**
 * @param {HTMLElement} tbody
 * @param {HTMLElement} containerDiv
-* @param {Array} array
+* @param {Array[]} array
 */
 const createForm = (tbody, containerDiv, array) => { //Arrow function létrehozása aminek a tbody, containerDiv és az array a bemeneti paramétere
     const formDiv = makeDiv("form"); //formdiv létrehozása, aminek a form lesz a classa
@@ -184,7 +184,7 @@ const createForm = (tbody, containerDiv, array) => { //Arrow function létrehoz�
 }
 /**
  *
- * @param {Object} valueObject
+ * @param {{forradalom: string, evszam: string, sikeres: string}} valueObject
  * @param {HTMLElement} tbody
  */
 const addRow = (valueObject, tbody) => { //Arrow function létrehozása aminek a tbody és a valueObject a bemeneti paramétere
@@ -206,7 +206,7 @@ const addRow = (valueObject, tbody) => { //Arrow function létrehozása aminek a
 /**
  *
  * @param {HTMLElement} containerDiv
- * @param {Array} array
+ * @param {{forradalom: string, evszam: string, sikeres: string}[]} array
  */
 const createFileDownload  = (containerDiv, array) => { //Arrow function létrehozása aminek a containerDiv és az array a bemeneti paramétere
     const exportButton = document.createElement('button'); //új gomb létrehozása
@@ -230,7 +230,7 @@ const createFileDownload  = (containerDiv, array) => { //Arrow function létreho
  *
  * @param {HTMLElement} containerDiv
  * @param {HTMLElement} tbody
- * @param {Array} array
+ * @param {{forradalom: string, evszam: string, sikeres: string}[]} array
  */
 const createFilterForm = (containerDiv, tbody, array) => { //Arrow function létrehozása aminek a tbody, containerDiv és az array a bemeneti paramétere
     const filterFormDiv = makeDiv('filterForm') //filterFormDiv létrehozása, aminek a filterForm lesz a classa

@@ -4,11 +4,11 @@ class Manager { //Manager osztály létrehozása
      */
     #array; //privát változó létrehozása
     /**
-     * @type {AddDataCallback}
+     * @type {addDataCallback}
      */
     #addDataCallback; //privát változó létrehozása
     /**
-     * @type {RenderTableCallback}
+     * @type {renderTableCallback}
      */
     #renderTableCallback; //privát változó létrehozása
  
@@ -18,7 +18,7 @@ class Manager { //Manager osztály létrehozása
  
     /**
      * 
-     * @param {Function} callback 
+     * @param {Function} callback - callback függvény, amely adatokat fogad.
      */
     setAddDataCallback(callback) { //callback függvény beállítása
         this.#addDataCallback = callback; //callback függvény eltárolása egy privát változóban
@@ -26,7 +26,7 @@ class Manager { //Manager osztály létrehozása
 
     /**
      * 
-     * @param {Function} callback 
+     * @param {Function} callback - callback függvény, amely egy adat tömböt vár, és rendereli azt a táblázatban.
      */
     setRenderTableCallback(callback){ //callback függvény beállítása
         this.#renderTableCallback = callback; //callback függvény eltárolása egy privát változóban
@@ -43,7 +43,7 @@ class Manager { //Manager osztály létrehozása
 
     /**
      * 
-     * @param {Function} callback 
+     * @param {Function} callback -callback függvény, amely egy adatot vár paraméterként, és igaz vagy hamis értéket ad vissza.
      */
     filter(callback){ //callback függvény beállítása
         const result = []; //üres tömb létrehozása, a szürt elemeknek
