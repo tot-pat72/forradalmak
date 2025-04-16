@@ -53,7 +53,7 @@ const createTable = (containerDiv, callback) => { //Arrow function létrehozása
 /**
  * @param {HTMLElement} tbody
  * @param {HTMLElement} containerDiv
- * @param {Array[]} array
+ * @param {{forradalom: string, evszam: string, sikeres: string}[]} array
  */
 const createFileUpload = (tbody, containerDiv, array) => { //Arrow function létrehozása aminek a tbody, containerDiv és az array a bemeneti paramétere
     const fileInput = document.createElement('input'); //input létrehozása
@@ -97,7 +97,7 @@ const createFileUpload = (tbody, containerDiv, array) => { //Arrow function lét
 /**
 * @param {HTMLElement} tbody
 * @param {HTMLElement} containerDiv
-* @param {Array[]} array
+* @param {{forradalom: string, evszam: string, sikeres: string}[]} array
 */
 const createForm = (tbody, containerDiv, array) => { //Arrow function létrehozása aminek a tbody, containerDiv és az array a bemeneti paramétere
     const formDiv = makeDiv("form"); //formdiv létrehozása, aminek a form lesz a classa

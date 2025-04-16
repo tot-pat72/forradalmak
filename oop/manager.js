@@ -1,3 +1,12 @@
+/**
+ * @callback addDataCallback
+ * @param {HTMLElement} tbody
+ * @returns {void}
+ * 
+ * @callback renderTableCallback
+ * @param {HTMLElement} tbody
+ * @returns {void}
+ */
 class Manager { //Manager osztály létrehozása
     /**
      * @type {Data[]}
@@ -69,7 +78,7 @@ class Manager { //Manager osztály létrehozása
 
     /**
     * 
-    * @param {forradalom: string, evszam: string, sikeres: string} property 
+    * @param {string} property 
     * @param {string} value 
     * @returns {Number}
     */
