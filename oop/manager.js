@@ -18,7 +18,7 @@ class Manager { //Manager osztály létrehozása
  
     /**
      * 
-     * @param {Function} callback - callback függvény, amely adatokat fogad.
+     * @param {{function(Forradalom): void}} callback - callback függvény, amely adatokat fogad.
      */
     setAddDataCallback(callback) { //callback függvény beállítása
         this.#addDataCallback = callback; //callback függvény eltárolása egy privát változóban
@@ -26,7 +26,7 @@ class Manager { //Manager osztály létrehozása
 
     /**
      * 
-     * @param {Function} callback - callback függvény, amely egy adat tömböt vár, és rendereli azt a táblázatban.
+     * @param {{function(Forradalom): void}} callback - callback függvény, amely egy adat tömböt vár, és rendereli azt a táblázatban.
      */
     setRenderTableCallback(callback){ //callback függvény beállítása
         this.#renderTableCallback = callback; //callback függvény eltárolása egy privát változóban
@@ -43,7 +43,7 @@ class Manager { //Manager osztály létrehozása
 
     /**
      * 
-     * @param {Function} callback -callback függvény, amely egy adatot vár paraméterként, és igaz vagy hamis értéket ad vissza.
+     * @param {{function(Forradalom): void}} callback -callback függvény, amely egy adatot vár paraméterként, és igaz vagy hamis értéket ad vissza.
      */
     filter(callback){ //callback függvény beállítása
         const result = []; //üres tömb létrehozása, a szürt elemeknek
@@ -65,5 +65,21 @@ class Manager { //Manager osztály létrehozása
             result.push(`${data.forradalom};${data.evszam};${data.sikeres}`); //sorok hozzáadása a tömbhöz
         }
         return result.join('\n'); //tömb átalakítása szöveggé(string), elválasztás soronként
+    }
+
+    /**
+    * 
+    * @param {forradalom: string, evszam: string, sikeres: string} property 
+    * @param {string} value 
+    * @returns {Number}
+    */
+    counter(property, value){ //counter függvény létrehozása
+        let counter = 0; //számláló létrehozása
+        for(const forradalom of this.#array){ //privát array bejárása
+            if(forradalom[property].toLowerCase().includes(value.toLowerCase())){ //ha az adott mező tartalmazza a keresett értéket
+                counter++; //számláló növelése
+            }
+        }
+        return counter; //visszatérés counterrel
     }
 }

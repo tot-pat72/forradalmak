@@ -109,7 +109,7 @@ class Table extends Area{ //Table osztály létrehozása, ami az Area leszármaz
     }
     /**
      * 
-     * @param {stHTMLTableRowElementring} row 
+     * @param {HTMLTableRowElement} row 
      * @param {string} textContent 
      * @param {string} type 
      */

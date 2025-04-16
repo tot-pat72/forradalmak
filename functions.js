@@ -275,32 +275,19 @@ const createFilterForm = (containerDiv, tbody, array) => { //Arrow function lét
 
     formForFilter.addEventListener('submit', (e) => { //eseménykezelő létrehozása a formForFilter submit eseményére
         e.preventDefault(); //az oldal újra frissülésének megakadályozása
-        const filterInput = e.target.querySelector('#filterInput'); //filterinput classal rendelkezö elem kiválasztása
-        const select = e.target.querySelector('select'); //select classal rendelkezö elem kiválasztása
-        const filteredArray = filter(array, (element) => { //filteredArray létrehozása a megadott mező és érték alapján
-            if(select.value == 'forradalom'){ //ha a kiválasztott mező a forradalom
-                if(filterInput.value === element.forradalom){ //ha a filterInput értéke egyenlő a forradalom értékével
-                    return true; //visszatérés igazzal
-                }
+
+        let counter = 0; //számláló létrehozása
+        for(const element of array) { //array bejárása
+            if(element[select.value].toLowerCase().includes(input.value.toLowerCase())) { //ha az adott mező tartalmazza a keresett értéket
+                counter++; //számláló növelése
             }
-            else if(select.value == 'evszam'){ //ha a kiválasztott mező az evszam
-                if(filterInput.value === element.evszam){ //ha a filterInput értéke egyenlő az evszam értékével
-                    return true; //visszatérés igazzal
-                }
-            }
-            else if(select.value == 'sikeres'){ //ha a kiválasztott mező a sikeres
-                if(filterInput.value === element.sikeres){ //ha a filterInput értéke egyenlő a sikeres értékével
-                    return true; //visszatérés igazzal
-                }
-            }
-            else{
-                return true; //visszatérés igazzal
-            }
-        })
-        tbody.innerHTML = ''; //táblázat kiürítése
-        for(const filteredElement of filteredArray){ //filteredArray bejárása
-            addRow(filteredElement, tbody) //addRow függvény egy új sort ad a táblázathoz
-                
         }
+
+        let result = formForFilter.querySelector('.result'); //result classal rendelkező elem eltárolása egy változóban
+        if(!result) { //ha a result még nem létezik
+            result = makeDiv('result'); //új div elem létrehozása, amelynek az osztálya a result
+            formForFilter.appendChild(result); //result hozzáadása a formForFilterhez
+        }
+        result.innerHTML = `Szűrés: ${counter}`; //result tartalmának beállítása
     })
 }
