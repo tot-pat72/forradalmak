@@ -1,10 +1,10 @@
 /**
  * @callback addDataCallback
- * @param {Data} 
+ * @param {Data} Data
  * @returns {void}
  * 
  * @callback renderTableCallback
- * @param {Data[]} 
+ * @param {Data[]} Data[]
  * @returns {void}
  */
 class Manager { //Manager osztály létrehozása
@@ -27,7 +27,7 @@ class Manager { //Manager osztály létrehozása
  
     /**
      * 
-     * @param {{function(Forradalom): void}} callback - callback függvény, amely adatokat fogad.
+     * @param {addDataCallback} callback - callback függvény, amely adatokat fogad.
      */
     setAddDataCallback(callback) { //callback függvény beállítása
         this.#addDataCallback = callback; //callback függvény eltárolása egy privát változóban
@@ -35,7 +35,7 @@ class Manager { //Manager osztály létrehozása
 
     /**
      * 
-     * @param {{function(Forradalom): void}} callback - callback függvény, amely egy adat tömböt vár, és rendereli azt a táblázatban.
+     * @param {renderTableCallback} callback - callback függvény, amely egy adat tömböt vár, és rendereli azt a táblázatban.
      */
     setRenderTableCallback(callback){ //callback függvény beállítása
         this.#renderTableCallback = callback; //callback függvény eltárolása egy privát változóban
