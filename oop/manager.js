@@ -1,10 +1,10 @@
 /**
  * @callback addDataCallback
- * @param {HTMLElement} tbody
+ * @param {Data} 
  * @returns {void}
  * 
  * @callback renderTableCallback
- * @param {HTMLElement} tbody
+ * @param {Data[]} 
  * @returns {void}
  */
 class Manager { //Manager osztály létrehozása
